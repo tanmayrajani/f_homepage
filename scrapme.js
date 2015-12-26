@@ -1,6 +1,7 @@
 var request = require('request');
 var cheerio = require('cheerio');
 var google = require('googleapis');
+var MongoClient = require('mongodb').MongoClient;
 var drive = google.drive('v2');
 var OAuth2Client = google.auth.OAuth2;
 
@@ -11,6 +12,7 @@ var REFRESH_TOKEN = '1/mQJkqUrrQxRSI3Nz9gZlMQ5uQOez89EgUjQW6EklNv4';
 var access_token = '';
 
 var url = 'http://fuckinghomepage.com/';
+var db = MongoClient.db("scrap");
 
 var oauth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 var date = new Date();
@@ -47,7 +49,7 @@ function fuckingHomepageBitches () {
                         mimeType: 'image/jpg',
                         parents: [{
                             kind: "drive#fileLink",
-                            id: "0ByLJVxbcr_stfkF4dXAyRXBWYlFaRkpYWEFtNExLTGItVU1VZzU3QktWZkhxWFFsQ2VRVjA"
+                            id: "0ByLJVxbcr_stfnJuOUp0M2ZrZ1pKUGdtS2JZVVNya2dVYjEzN2FOMzlvb3dQN2YwM1FvbjA"
                           }]
                       },
                       media: {
@@ -56,6 +58,9 @@ function fuckingHomepageBitches () {
                       },
                       auth: oauth2Client
                     }, function(err, response) {
+                        MongoClient.connect("mongodb://admin:TYLDG4a3vAZs@$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT", function(err, db) {
+                                console.log("connected!");
+                        });
                       console.log('error:', err, 'inserted:', response.id);
                     });
 
